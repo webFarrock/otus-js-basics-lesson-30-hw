@@ -1,7 +1,7 @@
 import { Component } from "../tools/Component";
+import { IEvents } from "./IEvents";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface iSearchComponentState {
+export interface ISearchComponentState {
   inputValue: string;
 }
 
@@ -9,7 +9,7 @@ const MIN_INPUT_LENGTH = 3;
 const INPUT_SELECTOR = ".js-search-input";
 const SUBMIT_SELECTOR = ".js-search-submit";
 
-export class SearchComponent extends Component<iSearchComponentState> {
+export class SearchComponent extends Component<IEvents, ISearchComponentState> {
   updFocusOnInput = (): void => {
     const reRendered = document.querySelector(INPUT_SELECTOR) as HTMLInputElement;
     reRendered.selectionStart = reRendered.selectionEnd = reRendered.value.length;
@@ -23,7 +23,7 @@ export class SearchComponent extends Component<iSearchComponentState> {
 
   submit = (): void => {
     const input = document.querySelector(INPUT_SELECTOR) as HTMLInputElement;
-    this.emitter?.emit("changeCity", input.value);
+    this.emitter?.emit("city:change", input.value);
 
     input.value = "";
     this.setState({ inputValue: "" });

@@ -1,8 +1,9 @@
 import { Component } from "../tools/Component";
 import { createIconImage, getWeather } from "../services/weather";
 import { createMapImage } from "../services/map";
+import { IEvents } from "./IEvents";
 
-export interface iSelectedCityComponentState {
+export interface ISelectedCityComponentState {
   name: string;
   description: string;
   main: string;
@@ -11,10 +12,10 @@ export interface iSelectedCityComponentState {
   icon: string;
 }
 
-export class SelectedCityComponent extends Component<iSelectedCityComponentState> {
+export class SelectedCityComponent extends Component<IEvents, ISelectedCityComponentState> {
   protected onMount() {
     if (this.emitter) {
-      this.emitter.on("changeCity", (cityName: string): void => {
+      this.emitter.on("city:change", (cityName: string): void => {
         if (cityName.length) {
           getWeather(cityName).then((weather) => {
             if (!weather) {

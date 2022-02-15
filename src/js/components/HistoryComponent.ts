@@ -1,17 +1,18 @@
 import { Component } from "../tools/Component";
+import { IEvents } from "./IEvents";
 
-export interface iHistoryComponentState {
+export interface IHistoryComponentState {
   items: string[];
 }
 const SEARCH_HISTORY_KEY = "SEARCH_HISTORY";
 const HISTORY_MAX_SIZE = 10;
 
-export class HistoryComponent extends Component<iHistoryComponentState> {
+export class HistoryComponent extends Component<IEvents, IHistoryComponentState> {
   protected onMount() {
     this.setState({ items: [...(this.state?.items || []), ...this.getSearchHistory()] });
 
     if (this.emitter) {
-      this.emitter.on("changeCity", (cityName: string): void => {
+      this.emitter.on("city:change", (cityName: string): void => {
         this.addToHistory(cityName);
         this.setState({ items: this.getSearchHistory() });
       });
@@ -39,7 +40,7 @@ export class HistoryComponent extends Component<iHistoryComponentState> {
 
   selectElem = (e: Event) => {
     if (this.emitter) {
-      this.emitter.emit("changeCity", (e.target as HTMLElement).innerText.trim());
+      this.emitter.emit("city:change", (e.target as HTMLElement).innerText.trim());
     }
   };
 

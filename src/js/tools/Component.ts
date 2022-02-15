@@ -1,8 +1,8 @@
 import { createNanoEvents, Emitter } from "nanoevents";
 
-export abstract class Component<TState> {
+export abstract class Component<IEvents, TState = Record<string, never>> {
   protected state?: Partial<TState>;
-  protected emitter?: Emitter;
+  protected emitter?: Emitter<IEvents>;
 
   protected events: {
     [key: string]: (ev: Event) => void;
@@ -10,7 +10,7 @@ export abstract class Component<TState> {
 
   abstract render(): string;
 
-  constructor(private el: HTMLElement, state?: Partial<TState>, emitter?: Emitter) {
+  constructor(private el: HTMLElement, state?: Partial<TState>, emitter?: Emitter<IEvents>) {
     this.el = el;
     if (state) {
       this.state = { ...this.state, ...state };
