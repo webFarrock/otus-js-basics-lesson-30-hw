@@ -27,7 +27,10 @@ export abstract class Component<TState> {
     Object.entries(this.events).forEach(([key, fn]) => {
       const [eventName, selector] = key.split("@");
       if (eventName && selector) {
-        this.el.querySelector(selector)?.addEventListener(eventName, fn);
+        const elems = this.el.querySelectorAll(selector);
+        elems.forEach((el) => {
+          el.addEventListener(eventName, fn);
+        });
       }
     });
   }
