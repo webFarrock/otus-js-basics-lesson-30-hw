@@ -1,12 +1,25 @@
+import { createNanoEvents, Emitter } from "nanoevents";
+
 export abstract class Component<TState> {
+  protected state?: Partial<TState>;
+  protected emitter?: Emitter;
+
   protected events: {
     [key: string]: (ev: Event) => void;
   } = {};
 
   abstract render(): string;
 
-  constructor(private el: HTMLElement, protected state?: Partial<TState>) {
+  constructor(private el: HTMLElement, state?: Partial<TState>, emitter?: Emitter) {
     this.el = el;
+    if (state) {
+      this.state = { ...this.state, ...state };
+    }
+
+    if (emitter) {
+      this.emitter = emitter;
+    }
+
     setTimeout(() => {
       this.el.innerHTML = this.render();
       this.subscribeToEvents();
