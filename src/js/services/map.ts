@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyBx0xC5JHjnOL8wu8UHKjjLIhxmqRDlbVM";
+const API_KEY = "AIzaSyD6_RmutKYlTFEfod5B6mfVfJtUFOw4GcU";
 const MAP_BASIC_URL = "//maps.googleapis.com/maps/api/staticmap";
 const MAP_ZOOM = 12;
 const MAP_WIDTH = 400;
