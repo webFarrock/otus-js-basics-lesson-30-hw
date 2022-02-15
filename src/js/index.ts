@@ -6,6 +6,7 @@ import { ISelectedCityComponentState, SelectedCityComponent } from "./components
 import { createNanoEvents, Emitter } from "nanoevents";
 import { getCurrentCity } from "./services/city";
 import { IEvents } from "./components/IEvents";
+import { TemplateEngine } from "./tools/TemplateEngine";
 
 const emitter = createNanoEvents<IEvents>();
 
@@ -22,7 +23,7 @@ const cityState: Partial<ISelectedCityComponentState> = {
   icon: "04d",
    */
 };
-const selectedCityComponent = new SelectedCityComponent(selectedCityComponentEl, cityState, emitter);
+// const selectedCityComponent = new SelectedCityComponent(selectedCityComponentEl, cityState, emitter);
 
 const historyComponentEl = document.getElementById("history-component") as HTMLElement;
 const historyState: Partial<IHistoryComponentState> = {
@@ -35,3 +36,18 @@ getCurrentCity().then((cityName) => {
     emitter.emit("city:change", cityName);
   }
 });
+
+const template = `<%title%>:
+  <%if(showSkills) {%>
+    <%for(let index in skills) {%>
+    <a href="#"><%skills[index]%></a>
+    <%}%>
+  <%} else {%>
+  <p>none</p>
+  <%}%>`;
+const options = {
+  title: "My skills!!!",
+  skills: ["js", "html", "css"],
+  showSkills: true,
+};
+selectedCityComponentEl.innerHTML = new TemplateEngine(template, options).render();
