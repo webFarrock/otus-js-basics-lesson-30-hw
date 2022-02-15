@@ -6,8 +6,7 @@ const ICON_BASE_PATH = "//openweathermap.org/img/wn/";
 
 const getWeather = async (cityName: string) => {
   try {
-    const result = await axios.get("", {
-      baseURL: WEATHER_BASE_URL,
+    const result = await axios.get(WEATHER_BASE_URL, {
       params: {
         q: cityName,
         apikey: API_KEY,
