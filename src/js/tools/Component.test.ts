@@ -10,13 +10,12 @@ describe("Component", () => {
 
   it("is a class", () => {
     expect(Component).toBeInstanceOf(Function);
-    expect(new Component(el)).toBeInstanceOf(Component);
   });
 
   it("renders on instantiating", async () => {
     const text = `${Math.random()}`;
 
-    class TestComponent extends Component<Record<string, unknown>> {
+    class TestComponent extends Component<Record<string, never>> {
       render() {
         return `<h1>${text}</h1>`;
       }
@@ -30,9 +29,12 @@ describe("Component", () => {
 
   it("renders on instantiating with state props", async () => {
     const text = `${Math.random()}`;
+    interface iComponentState {
+      text: string;
+    }
 
-    class TestComponent extends Component<Record<string, unknown>> {
-      state = {
+    class TestComponent extends Component<iComponentState> {
+      state: iComponentState = {
         text: text,
       };
       render() {
@@ -49,9 +51,13 @@ describe("Component", () => {
   it("updates component view on setState call", async () => {
     const a = `${Math.random()}`;
     const b1 = `${Math.random()}`;
+    interface iComponentState {
+      a: string;
+      b: string;
+    }
 
-    class TestComponent extends Component<Record<string, unknown>> {
-      state = {
+    class TestComponent extends Component<iComponentState> {
+      state: iComponentState = {
         a: a,
         b: b1,
       };
@@ -71,9 +77,12 @@ describe("Component", () => {
 
   it("calls methods based on events definition", async () => {
     const value = Math.floor(Math.random() * 100);
+    interface iComponentState {
+      value: number;
+    }
 
-    class TestComponent extends Component<Record<string, unknown>> {
-      state = {
+    class TestComponent extends Component<iComponentState> {
+      state: iComponentState = {
         value: value,
       };
 

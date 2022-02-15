@@ -1,7 +1,9 @@
-export class Component<TState> {
+export abstract class Component<TState> {
   protected events: {
     [key: string]: (ev: Event) => void;
   } = {};
+
+  abstract render(): string;
 
   constructor(private el: HTMLElement, protected state?: Partial<TState>) {
     this.el = el;
@@ -11,15 +13,16 @@ export class Component<TState> {
       this.onMount(this.el);
     }, 0);
   }
-  render(): string {
-    return "";
-  }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  protected onMount(el: HTMLElement): void {}
+
   setState(obj: Partial<TState>) {
     this.state = { ...this.state, ...obj };
     this.el.innerHTML = this.render();
     this.subscribeToEvents();
   }
-  onMount(el: HTMLElement): void {}
+
   private subscribeToEvents(): void {
     Object.entries(this.events).forEach(([key, fn]) => {
       const [eventName, selector] = key.split("@");
