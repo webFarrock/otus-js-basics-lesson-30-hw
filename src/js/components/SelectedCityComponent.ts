@@ -19,6 +19,7 @@ export class SelectedCityComponent extends Component<IEvents, ISelectedCityCompo
       main: this.state?.main,
       description: this.state?.description,
       mapImg: this.getMapImg(),
+      weatherImg: this.getWeatherImg(),
     };
   }
 
@@ -27,9 +28,12 @@ export class SelectedCityComponent extends Component<IEvents, ISelectedCityCompo
             <h2>Выбранный город</h2>
             <p>
                 <%name%>, <%main%> <%description%>
-                ${this.getWeatherImg()}
+                 
+                <span class="ico-image">
+                  <%weatherImg%>
+                </span>
             </p>
-            <div><%mapImg%></div>
+            <div class="map-image"><%mapImg%></div>
         <%}else{%>
             <h2>Город не выбран</h2>
         <%}%>
