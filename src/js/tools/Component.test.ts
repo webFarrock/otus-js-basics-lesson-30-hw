@@ -1,4 +1,5 @@
 import { Component } from "./Component";
+import { IEvents } from "../components/IEvents";
 
 const sleep = (x: number) => new Promise((r) => setTimeout(r, x));
 
@@ -33,7 +34,7 @@ describe("Component", () => {
       text: string;
     }
 
-    class TestComponent extends Component<iComponentState> {
+    class TestComponent extends Component<IEvents, iComponentState> {
       state: iComponentState = {
         text: text,
       };
@@ -56,7 +57,7 @@ describe("Component", () => {
       b: string;
     }
 
-    class TestComponent extends Component<iComponentState> {
+    class TestComponent extends Component<IEvents, iComponentState> {
       state: iComponentState = {
         a: a,
         b: b1,
@@ -81,7 +82,7 @@ describe("Component", () => {
       value: number;
     }
 
-    class TestComponent extends Component<iComponentState> {
+    class TestComponent extends Component<IEvents, iComponentState> {
       state: iComponentState = {
         value: value,
       };
