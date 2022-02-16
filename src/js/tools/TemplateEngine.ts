@@ -3,7 +3,7 @@ export interface ITemplateEngine {
 }
 
 export class TemplateEngine implements ITemplateEngine {
-  constructor(private template: string, private options: any) {}
+  constructor(private template: string, private options: any = {}) {}
 
   collectCode = (line: string, js = false) => {
     const reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g;
