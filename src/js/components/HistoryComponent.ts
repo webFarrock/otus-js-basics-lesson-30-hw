@@ -8,6 +8,27 @@ const SEARCH_HISTORY_KEY = "SEARCH_HISTORY";
 const HISTORY_MAX_SIZE = 10;
 
 export class HistoryComponent extends Component<IEvents, IHistoryComponentState> {
+  get templateOptions() {
+    return {
+      history: this.state?.items || [],
+    };
+  }
+
+  template = `
+        <%if(history){%>
+          <h2>История поиска</h2>
+          <div class="list-group list-group--search-history">
+              <%for(const item of history){%>
+                <div class="js-history-city-name list-group-item list-group-item-action d-flex gap-3 py-3">
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <h6 class="mb-0"><%item%></h6>
+                    </div>
+                </div>
+              <%}%> 
+          </div>
+        <%}%>
+    `;
+
   protected onMount() {
     this.setState({ items: [...(this.state?.items || []), ...this.getSearchHistory()] });
 
@@ -47,27 +68,4 @@ export class HistoryComponent extends Component<IEvents, IHistoryComponentState>
   events = {
     "click@.js-history-city-name": this.selectElem,
   };
-
-  render() {
-    return `
-        <h2>История поиска</h2>
-        <div class="list-group list-group--search-history">
-            ${this.renderListElems(this.state?.items || [])}
-        </div>
-    `;
-  }
-
-  private renderListElems(elems: string[]): string {
-    const result: string[] = elems.map((item) => {
-      return `
-            <div class="js-history-city-name list-group-item list-group-item-action d-flex gap-3 py-3">
-                <div class="d-flex gap-2 w-100 justify-content-between">
-                    <h6 class="mb-0">${item}</h6>
-                </div>
-            </div>      
-      `;
-    });
-
-    return result.join("");
-  }
 }

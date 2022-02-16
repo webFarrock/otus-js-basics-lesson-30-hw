@@ -13,6 +13,42 @@ export interface ISelectedCityComponentState {
 }
 
 export class SelectedCityComponent extends Component<IEvents, ISelectedCityComponentState> {
+  get templateOptions() {
+    return {
+      name: this.state?.name,
+      main: this.state?.main,
+      description: this.state?.description,
+      mapImg: this.getMapImg(),
+    };
+  }
+
+  template = `
+        <%if(name){%>
+            <h2>Выбранный город</h2>
+            <p>
+                <%name%>, <%main%> <%description%>
+                ${this.getWeatherImg()}
+            </p>
+            <div><%mapImg%></div>
+        <%}else{%>
+            <h2>Город не выбран</h2>
+        <%}%>
+    `;
+
+  getWeatherImg(): string {
+    if (this.state?.icon) {
+      return createIconImage(this.state.icon).outerHTML;
+    }
+    return "";
+  }
+
+  getMapImg(): string {
+    if (this.state?.lat && this.state.lon) {
+      return createMapImage(this.state.lat, this.state.lon).outerHTML;
+    }
+    return "";
+  }
+
   protected onMount() {
     if (this.emitter) {
       this.emitter.on("city:change", (cityName: string): void => {
@@ -44,31 +80,4 @@ export class SelectedCityComponent extends Component<IEvents, ISelectedCityCompo
       icon: "",
     };
   };
-
-  getWeatherImg(): string {
-    if (this.state?.icon) {
-      return createIconImage(this.state.icon).outerHTML;
-    }
-    return "";
-  }
-  getMapImg(): string {
-    if (this.state?.lat && this.state.lon) {
-      return createMapImage(this.state.lat, this.state.lon).outerHTML;
-    }
-    return "";
-  }
-  render() {
-    return `
-        <div class="col-md-6">
-          <h2>Выбранный город</h2>
-          <div id="weather-result">
-              ${this.state?.name}, ${this.state?.main} ${this.state?.description}
-              ${this.getWeatherImg()}
-          </div>
-          <div id="map-container">
-              ${this.getMapImg()}
-          </div>
-        </div>
-    `;
-  }
 }

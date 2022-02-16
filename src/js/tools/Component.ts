@@ -1,4 +1,5 @@
 import { createNanoEvents, Emitter } from "nanoevents";
+import { TemplateEngine } from "./TemplateEngine";
 
 export abstract class Component<IEvents, TState = Record<string, never>> {
   protected state?: Partial<TState>;
@@ -8,7 +9,8 @@ export abstract class Component<IEvents, TState = Record<string, never>> {
     [key: string]: (ev: Event) => void;
   } = {};
 
-  abstract render(): string;
+  abstract templateOptions: Record<string, unknown>;
+  abstract template: string;
 
   constructor(private el: HTMLElement, state?: Partial<TState>, emitter?: Emitter<IEvents>) {
     this.el = el;
@@ -27,14 +29,18 @@ export abstract class Component<IEvents, TState = Record<string, never>> {
     }, 0);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  protected onMount(el: HTMLElement): void {}
+  render(): string {
+    return new TemplateEngine(this.template, this.templateOptions).render();
+  }
 
   setState(obj: Partial<TState>) {
     this.state = { ...this.state, ...obj };
     this.el.innerHTML = this.render();
     this.subscribeToEvents();
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  protected onMount(el: HTMLElement): void {}
 
   private subscribeToEvents(): void {
     Object.entries(this.events).forEach(([key, fn]) => {
