@@ -23,8 +23,7 @@ describe("weather", () => {
     const result = await getWeather(cityName);
     expect(result).toBeTruthy();
 
-    expect(mockedAxios.get).toHaveBeenCalledWith("", {
-      baseURL: WEATHER_BASE_URL,
+    expect(mockedAxios.get).toHaveBeenCalledWith(WEATHER_BASE_URL, {
       params: {
         q: cityName,
         apikey: API_KEY,
