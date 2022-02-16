@@ -115,8 +115,8 @@ describe("Component", () => {
       }
     }
     const item = new TestComponent(el);
-    const increaseSpy = jest.spyOn(item, "increase");
-    const decreaseSpy = jest.spyOn(item, "decrease");
+    jest.spyOn(item, "increase");
+    jest.spyOn(item, "decrease");
     await sleep(0);
 
     expect(item.state.value).toBe(value);

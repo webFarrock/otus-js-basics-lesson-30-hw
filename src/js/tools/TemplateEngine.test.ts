@@ -1,11 +1,6 @@
 import { TemplateEngine } from "./TemplateEngine";
 
 describe("TemplateEngine", () => {
-  let el: HTMLDivElement;
-  beforeEach(() => {
-    el = document.createElement("div");
-  });
-
   it("render template with options", () => {
     const options = {
       titleListOne: "Here is some listOne: ",

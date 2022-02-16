@@ -31,7 +31,7 @@ describe("SearchComponent", () => {
       inputValue: "",
     };
 
-    const searchComponent = new SearchComponent(el, searchState);
+    new SearchComponent(el, searchState);
     await sleep(0);
 
     const input = el.querySelector("input[type=text]") as HTMLInputElement;

@@ -1,4 +1,4 @@
-import { createNanoEvents, Emitter } from "nanoevents";
+import { Emitter } from "nanoevents";
 import { TemplateEngine } from "./TemplateEngine";
 
 export abstract class Component<IEvents, TState = Record<string, never>> {
@@ -39,7 +39,7 @@ export abstract class Component<IEvents, TState = Record<string, never>> {
     this.subscribeToEvents();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
   protected onMount(el: HTMLElement): void {}
 
   private subscribeToEvents(): void {
