@@ -39,14 +39,14 @@ export class SelectedCityComponent extends Component<IEvents, ISelectedCityCompo
         <%}%>
     `;
 
-  getWeatherImg(): string {
+  private getWeatherImg(): string {
     if (this.state?.icon) {
       return createIconImage(this.state.icon).outerHTML;
     }
     return "";
   }
 
-  getMapImg(): string {
+  private getMapImg(): string {
     if (this.state?.lat && this.state.lon) {
       return createMapImage(this.state.lat, this.state.lon).outerHTML;
     }

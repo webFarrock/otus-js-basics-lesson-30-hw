@@ -4,6 +4,7 @@ import { IEvents } from "./IEvents";
 export interface IHistoryComponentState {
   items: string[];
 }
+
 const SEARCH_HISTORY_KEY = "SEARCH_HISTORY";
 const HISTORY_MAX_SIZE = 10;
 
@@ -40,16 +41,16 @@ export class HistoryComponent extends Component<IEvents, IHistoryComponentState>
     }
   }
 
-  addToHistory = (cityName: string): void => {
+  private addToHistory(cityName: string): void {
     const history = this.getSearchHistory();
     history.unshift(cityName);
 
     const newHistory = history.filter((value, index, self) => self.indexOf(value) === index).slice(0, HISTORY_MAX_SIZE);
 
     localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(newHistory));
-  };
+  }
 
-  getSearchHistory = (): string[] => {
+  private getSearchHistory(): string[] {
     let history = localStorage.getItem(SEARCH_HISTORY_KEY);
     if (!history) {
       return [];
@@ -57,9 +58,9 @@ export class HistoryComponent extends Component<IEvents, IHistoryComponentState>
     history = JSON.parse(history);
 
     return Array.isArray(history) ? history : [];
-  };
+  }
 
-  selectElem = (e: Event) => {
+  private selectElem = (e: Event) => {
     if (this.emitter) {
       this.emitter.emit("city:change", (e.target as HTMLElement).innerText.trim());
     }

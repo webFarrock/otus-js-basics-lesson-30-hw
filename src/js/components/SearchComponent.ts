@@ -29,18 +29,19 @@ export class SearchComponent extends Component<IEvents, ISearchComponentState> {
         </div>
     `;
 
-  updFocusOnInput = (): void => {
+  private updFocusOnInput(): void {
     const reRendered = document.querySelector(INPUT_SELECTOR) as HTMLInputElement;
     reRendered.selectionStart = reRendered.selectionEnd = reRendered.value.length;
     reRendered.focus();
-  };
-  updInputValue = (e: Event): void => {
+  }
+
+  private updInputValue = (e: Event): void => {
     const inputElem = e.target as HTMLInputElement;
     this.setState({ inputValue: inputElem.value });
     this.updFocusOnInput();
   };
 
-  submit = (): void => {
+  private submit = (): void => {
     const input = document.querySelector(INPUT_SELECTOR) as HTMLInputElement;
     this.emitter?.emit("city:change", input.value);
 
