@@ -17,6 +17,9 @@ describe("Component", () => {
     const text = `${Math.random()}`;
 
     class TestComponent extends Component<Record<string, never>> {
+      templateOptions = {};
+      template = "";
+
       render() {
         return `<h1>${text}</h1>`;
       }
@@ -35,6 +38,8 @@ describe("Component", () => {
     }
 
     class TestComponent extends Component<IEvents, iComponentState> {
+      templateOptions = {};
+      template = "";
       state: iComponentState = {
         text: text,
       };
@@ -58,6 +63,9 @@ describe("Component", () => {
     }
 
     class TestComponent extends Component<IEvents, iComponentState> {
+      templateOptions = {};
+      template = "";
+
       state: iComponentState = {
         a: a,
         b: b1,
@@ -83,6 +91,9 @@ describe("Component", () => {
     }
 
     class TestComponent extends Component<IEvents, iComponentState> {
+      templateOptions = {};
+      template = "";
+
       state: iComponentState = {
         value: value,
       };
